@@ -54,6 +54,9 @@ class PhoneNumberPrefixWidget(MultiWidget):
     """
     def __init__(self, attrs=None, initial=None):
         widgets = (PhonePrefixSelect(initial),TextInput(),)
+        if not attrs:
+            attrs = {}
+        attrs['class'] = 'phone_number_multi_widget'
         super(PhoneNumberPrefixWidget, self).__init__(widgets, attrs)
 
     def decompress(self, value):
