@@ -21,7 +21,7 @@ class PhonePrefixSelect(Select):
         choices = [('', '---------')]
         for db_name, country, prefix in COUNTRIES_WITH_COUNTRY_CODE:
             if initial and initial == db_name:
-                self.initial = prefix
+                self.initial = initial
             choices.append((db_name, u'%s %s' % (country, prefix)))
 
 #        locale = Locale(translation.get_language())
@@ -37,8 +37,8 @@ class PhonePrefixSelect(Select):
         return super(PhonePrefixSelect, self).__init__(choices=sorted(choices, key=lambda item: item[1]))
 
     def render(self, name, value, *args, **kwargs):
-        if value:
-            value = COUNTRY_BY_COUNTRY_CODE[value]
+        if value and (not self.initial or COUNTRY_CODE_BY_COUNTRY[self.initial] != value):
+            self.initial = COUNTRY_BY_COUNTRY_CODE[value]
         return super(PhonePrefixSelect, self).render(name, self.initial or value, *args, **kwargs)
 
     def value_from_datadict(self, data, files, name):
@@ -65,6 +65,6 @@ class PhoneNumberPrefixWidget(MultiWidget):
 
     def value_from_datadict(self, data, files, name):
         values = super(PhoneNumberPrefixWidget, self).value_from_datadict(data, files, name)
-        if not values[0] and not values[1]:
+        if not values[1]:
             return ''
         return '%s.%s' % tuple(values)
