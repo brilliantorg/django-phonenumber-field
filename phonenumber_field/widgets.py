@@ -37,7 +37,7 @@ class PhonePrefixSelect(Select):
         return super(PhonePrefixSelect, self).__init__(choices=sorted(choices, key=lambda item: item[1]))
 
     def render(self, name, value, *args, **kwargs):
-        if value and (not self.initial or COUNTRY_CODE_BY_COUNTRY[self.initial] != value):
+        if value and (not self.initial or COUNTRY_CODE_BY_COUNTRY[self.initial] != value) and value in COUNTRY_BY_COUNTRY_CODE:
             self.initial = COUNTRY_BY_COUNTRY_CODE[value]
         return super(PhonePrefixSelect, self).render(name, self.initial or value, *args, **kwargs)
 
