@@ -10,7 +10,11 @@ from django.forms.widgets import MultiWidget
 
 from phonenumber_field.phonenumber import to_python, PhoneNumber
 
-from brilliant.utils import COUNTRIES_WITH_COUNTRY_CODE, COUNTRY_BY_COUNTRY_CODE, COUNTRY_CODE_BY_COUNTRY
+from brilliant.utils.countries import (
+    COUNTRIES_WITH_COUNTRY_CODE,
+    COUNTRY_BY_COUNTRY_CODE,
+    COUNTRY_CODE_BY_COUNTRY,
+)
 
 
 class PhonePrefixSelect(Select):
