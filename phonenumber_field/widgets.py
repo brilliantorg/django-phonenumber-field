@@ -70,6 +70,14 @@ class PhoneNumberPrefixWidget(MultiWidget):
             return value.split('.')
         return [None, None]
 
+    def render(self, name, value, *args, **kwargs):
+        values = self.decompress(value)
+        rendered_widgets = [x.render('%s_%d' % (name, i),
+                                     values[i],
+                                     dict(self.attrs, **{'id': 'id_%s_%d' % (name, i)}))
+                            for i, x in enumerate(self.widgets)]
+        return ''.join(rendered_widgets)
+
     def value_from_datadict(self, data, files, name):
         values = super(PhoneNumberPrefixWidget, self).value_from_datadict(data, files, name)
         if not values[1]:
