@@ -33,3 +33,4 @@ tests/tmp/
 *.coverage
 htmlcov/
 share/
+.idea/
